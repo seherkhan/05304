@@ -1,13 +1,11 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /**
  * Created by Seher Khan on 8/24/2017.
  */
-//**********************************************************************
-// PrintName application
-// This application inputs a name and prints it in two different formats
-//**********************************************************************
-import java.io.*; // Package for stream readers
-public class PrintName
-{
+public class PrintName {
     public static void main(String[] args) throws IOException
     {
         String first; // Person’s first name
@@ -33,7 +31,4 @@ public class PrintName
         System.out.println("Name in First-name Middle-initial. Last-name format is " +
                 newFormat);
     }
-
 }
-
-
