@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="myCalc.Main">
+    <padding><Insets bottom="25" left="25" right="25" top="25" /></padding>
+   <children>
+
+
+
+      <Button fx:id="0" mnemonicParsing="false" onAction="#numberPressed" prefHeight="50.0" prefWidth="110.0" text="0" GridPane.rowIndex="5" />
+      <Button fx:id="1" mnemonicParsing="false" onAction="#numberPressed" prefHeight="50.0" prefWidth="55.0" text="1" GridPane.rowIndex="2" />
+      <Button fx:id="2" mnemonicParsing="false" onAction="#numberPressed" prefHeight="50.0" prefWidth="55.0" text="2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button fx:id="3" mnemonicParsing="false" onAction="#numberPressed" prefHeight="50.0" prefWidth="55.0" text="3" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <Button fx:id="4" mnemonicParsing="false" onAction="#numberPressed" prefHeight="50.0" prefWidth="55.0" text="4" GridPane.rowIndex="3" />
+      <Button fx:id="5" mnemonicParsing="false" onAction="#numberPressed" prefHeight="50.0" prefWidth="55.0" text="5" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Button fx:id="6" mnemonicParsing="false" onAction="#numberPressed" prefHeight="50.0" prefWidth="55.0" text="6" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <Button fx:id="7" mnemonicParsing="false" onAction="#numberPressed" prefHeight="50.0" prefWidth="55.0" text="7" GridPane.rowIndex="4" />
+      <Button fx:id="8" mnemonicParsing="false" onAction="#numberPressed" prefHeight="50.0" prefWidth="55.0" text="8" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Button fx:id="9" mnemonicParsing="false" onAction="#numberPressed" prefHeight="50.0" prefWidth="55.0" text="9" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <Button fx:id="decimal" mnemonicParsing="false" onAction="#decimalPressed" prefHeight="50.0" prefWidth="55.0" text="." GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <Button fx:id="equals" mnemonicParsing="false" onAction="#equalsPressed" prefHeight="50.0" prefWidth="110.0" text="=" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      <Button fx:id="divide" mnemonicParsing="false" onAction="#dividePressed" prefHeight="50.0" prefWidth="55.0" text="/" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+      <Button fx:id="multiply" mnemonicParsing="false" onAction="#multiplyPressed" prefHeight="50.0" prefWidth="55.0" text="x" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <Button fx:id="minus" mnemonicParsing="false" onAction="#subtractPressed" prefHeight="50.0" prefWidth="55.0" text="-" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+      <Button fx:id="add" mnemonicParsing="false" onAction="#addPressed" prefHeight="50.0" prefWidth="55.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <Button fx:id="clear" mnemonicParsing="false" onAction="#clearPressed" prefHeight="50.0" prefWidth="110.0" text="Clear" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+      <!-- keep TextField below buttons-->
+      <TextField fx:id="textField" layoutX="220.0" layoutY="110.0" GridPane.columnSpan="4" />
+      <Button fx:id="del" mnemonicParsing="false" onAction="#delPressed" prefHeight="50.0" prefWidth="110.0" text="Del" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+
+   </children>
+
+    <stylesheets>
+
+    </stylesheets>
+   <columnConstraints>
+      <ColumnConstraints maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+      <ColumnConstraints maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+      <ColumnConstraints maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+      <ColumnConstraints maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
+      <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" />
+      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
+      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
+      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
+      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
+      <RowConstraints />
+   </rowConstraints>
+
+</GridPane>
