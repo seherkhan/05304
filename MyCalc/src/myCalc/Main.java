@@ -1,76 +1,115 @@
+
+
 package myCalc;
 
 import javafx.application.Application;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+//TO DO figure out decimal places. 1.23-1 should return 0.23
+
+public class Main extends Application implements Initializable{
 
     @FXML TextField textField;
     Double a;
     String inputStr="";
-    Character lastOperation='x';
+    char lastOperation='x';
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("MyCalc.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("ButtonApp.fxml"));
         primaryStage.setTitle("Calculator");
-        primaryStage.setScene(new Scene(root, 300, 400));
+        Scene scene = new Scene(root, 300, 400);
+        primaryStage.setScene(scene);
+        //scene.getStylesheets().add(Main.class.getResource("Calc.css").toExternalForm());
         primaryStage.show();
-        /*
-        root.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if(event.getCode().isDigitKey()){ numberPressed(event); }
-                else if(event.getCode().equals(KeyCode.DECIMAL)){ decimalPressed(event); event.consume();}
-                else{
-                    switch(event.getCode()){
-                        case ADD: addPressed(event); event.consume();
-                        case SUBTRACT: subtractPressed(event); event.consume();
-                        case ASTERISK: multiplyPressed(event); event.consume();
-                        case DIVIDE: dividePressed(event); event.consume();
-                        case ENTER: equalsPressed(event); event.consume();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+
+        textField.textProperty().addListener(
+                (observable,oldValue,newValue)->{
+                    if(newValue.matches("\\S|^-?\\d*\\.?\\d*$|ERROR")){
                     }
-                }
+                    else{
+                        textField.setText(oldValue);
+                        inputStr=oldValue;
+                    }
+                });
+    }
+    public void keyPressed(KeyEvent e) {
+        String key= String.valueOf(e.getCode());
+            if(key.equals("ENTER")||key.equals("EQUALS"))  equalsPressed();
+            else if(key.equals("BACK_SPACE")||key.equals("DELETE")) delPressed();
+            else if(key.equals("ADD")) addPressed();
+            else if(key.equals("SUBTRACT")||key.equals("MINUS")) subtractPressed();
+            else if(key.equals("MULTIPLY")) multiplyPressed();
+            else if(key.equals("DIVIDE")||key.equals("SLASH")) dividePressed();
+            else if(key.equals("DECIMAL")||key.equals("PERIOD")) decimalPressed();
+            else if(key.startsWith("NUMPAD")||key.startsWith("DIGIT")) numPressed(e);
+            else if(key.equals("ESCAPE")){
+                Stage sb = (Stage) textField.getScene().getWindow();
+                sb.close();
             }
-        });
-        */
     }
 
-    @FXML void numberPressed(Event event) {if(lastOperation=='e') clc(); inputStr += ((Button) (event.getSource())).getId(); textField.setText(inputStr); displayInfo();}
 
-    @FXML void decimalPressed(Event event) {if(lastOperation=='e') clc(); inputStr+=".";textField.setText(inputStr);displayInfo();}
 
-    @FXML void addPressed(Event event) {
-       if(inputStr.length()==0){System.out.println("Do nothing, just store op"); lastOperation='a';}
-       else{
-           if(a==null) {
-               a = Double.parseDouble(inputStr);
-               textField.setText(String.valueOf(a));
-           }
-           else{
-               a=operate(a,Double.parseDouble(inputStr));
-               textField.setText(String.valueOf(a));
-           }
-           lastOperation='a';
-           inputStr="";
-       }
-       displayInfo();
+    @FXML void numPressed(Event event){
+        if(lastOperation=='e')
+            clc();
+        if(event instanceof KeyEvent)
+            inputStr += ((KeyEvent) event).getText();
+        else
+            inputStr += ((Button) event.getSource()).getId();
+        textField.setText(inputStr);
+        //displayInfo();
     }
 
-    @FXML void subtractPressed(Event event) {
-
+    @FXML void decimalPressed(){
+        if(lastOperation=='e')
+            clc();
+        inputStr += ".";
+        textField.setText(inputStr);
+        //displayInfo();
+    }
+    @FXML void addPressed() {
+        if(inputStr.length()==0){
+            lastOperation='a';
+        }
+        else{
+            if(a==null) {
+                a = Double.parseDouble(inputStr);
+                textField.setText(String.valueOf(a));
+            }
+            else{
+                a=operate(a,Double.parseDouble(inputStr));
+                textField.setText(String.valueOf(a));
+            }
+            lastOperation='a';
+            inputStr="";
+        }
+        //displayInfo();
+    }
+    @FXML void subtractPressed() {
         if (inputStr.length()==0&&textField.getText().length()==0) {
-            System.out.println("inputStr='-' and store op");
             inputStr += "-";
             lastOperation = 's';
             textField.setText(inputStr);
@@ -87,12 +126,10 @@ public class Main extends Application {
             lastOperation = 's';
             inputStr = "";
         }
-        displayInfo();
-
+        //displayInfo();
     }
-    @FXML void multiplyPressed(Event event) {
+    @FXML void multiplyPressed() {
         if (inputStr.length()==0) {
-            System.out.println("Do nothing, just store op");
             lastOperation = 'm';
         } else {
             if (a == null) {
@@ -105,11 +142,12 @@ public class Main extends Application {
             lastOperation = 'm';
             inputStr = "";
         }
-        displayInfo();
+        //displayInfo();
     }
-
-    @FXML void dividePressed(Event event) {
-        if(inputStr.length()==0){System.out.println("Do nothing, just store op"); lastOperation='d';}
+    @FXML void dividePressed() {
+        if(inputStr.length()==0){
+            lastOperation='d';
+        }
         else{
             if(a==null) {
                 a = Double.parseDouble(inputStr);
@@ -122,73 +160,64 @@ public class Main extends Application {
             lastOperation='d';
             inputStr="";
         }
-        displayInfo();
+        //displayInfo();
     }
-    @FXML void equalsPressed(Event event) {
-
+    @FXML void equalsPressed() {
         if(inputStr.length()==0){
-            System.out.println("Do nothing except clearing lastOperation");
             lastOperation='x';
         }
+
         else if(inputStr.equals("-")) clc();
         else{
             if(inputStr.indexOf(".")!=inputStr.lastIndexOf("."))  {clc(); textField.setText("ERROR"); return;}
-                if(a==null) {
-                    a = Double.parseDouble(inputStr);
-                    textField.setText(String.valueOf(a));
-                }
-                else{
-                    if(Double.parseDouble(inputStr)==0&&lastOperation=='d'){
-                        clc(); textField.setText("ERROR"); return;}
-                    if(lastOperation==null)
-                        a=Double.parseDouble(inputStr);
-                    else a=operate(a,Double.parseDouble(inputStr));
-                    textField.setText(String.valueOf(a));
-                }
+            if(a==null) {
+                a = Double.parseDouble(inputStr);
+                textField.setText(String.valueOf(a));
+            }
+            else{
+                if(Double.parseDouble(inputStr)==0&&lastOperation=='d'){
+                    clc(); textField.setText("ERROR"); return;}
+                if(lastOperation=='x')
+                    a=Double.parseDouble(inputStr);
+                else a=operate(a,Double.parseDouble(inputStr));
+                textField.setText(String.valueOf(a));
+            }
             inputStr="";
             lastOperation='e';
         }
-        displayInfo();
+        //displayInfo();
     }
-
-
-    @FXML void clearPressed(Event event) {
+    @FXML void delPressed(){
+        if(textField.getText().length()!=0) {
+            inputStr=textField.getText().substring(0,textField.getText().length()-1);
+            textField.setText(inputStr);
+            lastOperation='x';
+            if(textField.getText().length()==0) clc();
+        }
+    }
+    @FXML void clearPressed() {
         clc();
     }
 
-    @FXML
-    private void delPressed(){
-        System.out.println(textField.getText());
-        System.out.println(textField.getText().length());
-        if(textField.getText().length()!=0) textField.setText(textField.getText().substring(0,textField.getText().length()-1));
-    }
-
-    //helper method for bringing variables to their initial states
     private void clc(){
         textField.setText("");
         inputStr="";
         a=null;
         lastOperation='x';
-        System.out.println("Clear called");
-        displayInfo();
+        //System.out.println("Clear called");
+        //displayInfo();
     }
 
-    //helper method to display state of all variables
-    private void displayInfo(){
-        System.out.println("a: "+a+", inputStr: "+inputStr+", textField: "+textField.getText()+", lastOperation: "+lastOperation);
-    }
-
-    //helper method to perform operation
-    private  Double operate(Double x, Double y) {
+    private  double operate(double x, double y) {
         switch (lastOperation) {
             case 'a':
-                return x + y;
+                return (double)Math.round((x+y)*1000000000)/1000000000;
             case 's':
-                return x - y;
+                return (double)Math.round((x-y)*1000000000)/1000000000;
             case 'm':
-                return x * y;
+                return (double)Math.round((x*y)*1000000000)/1000000000;
             case 'd':
-                return x / y;
+                return (double)Math.round((x/y)*1000000000)/1000000000;
             case 'x':
                 clc();
                 return x;
@@ -197,13 +226,8 @@ public class Main extends Application {
         return-1.0;
     }
 
-
-
-
-
-
-    public static void main(String[] args) {
-        launch(args);
+    private void displayInfo(){
+        System.out.println("a: "+a+", inputStr: "+inputStr+", textField: "+textField.getText()+", lastOperation: "+lastOperation);
     }
-    }
+}
 
