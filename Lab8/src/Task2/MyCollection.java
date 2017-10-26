@@ -38,6 +38,22 @@ public class MyCollection {
     }
 
     /**
+     * Method 1:
+     * Finds the "sum" of the given list.
+     * @param lst
+     * @param <T>
+     * @return sum (e.g. concatenation in case of String, addition in case of Integer)
+     */
+    public static <T> T sum(List<T> lst, Summer<T> summer){
+        if(lst.isEmpty())
+            return null;
+        else{
+            return (T) summer.sum(lst);
+        }
+    }
+
+    /**
+     * Method 2:
      * Finds the "sum" of the given list.
      * @param lst
      * @param <T>

@@ -18,7 +18,8 @@ public class Task2Demo {
         intLst.add(0);
         System.out.println(myCollection.min(intLst,Integer::compareTo));
         System.out.println(myCollection.max(intLst,Integer::compareTo));
-        System.out.println(myCollection.sum(intLst));
+        Summer<Integer> intSum = new IntSummer();
+        System.out.println(myCollection.sum(intLst,intSum));
 
         List<Double> doubleLst = new ArrayList<>();
         doubleLst.add(5.1);
@@ -28,6 +29,7 @@ public class Task2Demo {
 
         System.out.println(myCollection.min(doubleLst,Double::compareTo));
         System.out.println(myCollection.max(doubleLst,Double::compareTo));
+        Summer<Double> douSum = new DoubleSummer();
         System.out.println(myCollection.sum(doubleLst));
 
         List<String> strLst = new ArrayList<>();
@@ -39,7 +41,8 @@ public class Task2Demo {
         strLst.add("good");
         System.out.println(myCollection.min(strLst,String::compareTo));
         System.out.println(myCollection.max(strLst,String::compareTo));
-        System.out.println(myCollection.sum(strLst));
+        Summer<String> strSum = new StringSummer();
+        System.out.println(myCollection.sum(strLst,strSum));
 
 
     }

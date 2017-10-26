@@ -25,10 +25,10 @@ public class Task1Demo {
             System.out.println("Queue 3: "+q3);
 
             q3.put('f'); //size of q1 is 2 but a third item is being inserted in the queue
-            System.out.println(q3.getLast()); //this line will not run because above line throws a Task1.QueueFullException exception
+            System.out.println(q3.getLast()); //this line will not run because above line throws a QueueFullException exception
 
         }
-        //Task 3:
+
         catch (QueueEmptyException e) {
             e.printStackTrace();
         }
