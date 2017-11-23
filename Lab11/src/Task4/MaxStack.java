@@ -1,11 +1,12 @@
 package Task4;
 
+import java.io.*;
 import java.util.Stack;
 
 /**
  * Created by Seher Khan on 11/23/2017.
  */
-public class MaxStack {
+public class MaxStack implements Serializable {
     private int[] stk;
     private int top;
     public MaxStack(int size){
@@ -63,8 +64,19 @@ public class MaxStack {
             System.out.print(i+" ");
         System.out.println("]");
     }
+    public void writeToFile(String filename) throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(filename)));
+        objectOutputStream.writeObject(this);
+        objectOutputStream.close();
+    }
+    public MaxStack readFromFile(String filename) throws IOException, ClassNotFoundException {
+        ObjectInputStream objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
+        MaxStack stackFromFile = (MaxStack) objectInputStream.readObject();
+        objectInputStream.close();
+        return stackFromFile;
+    }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         MaxStack s = new MaxStack(10);
         s.display();
         System.out.println(s.getMax());
@@ -78,6 +90,8 @@ public class MaxStack {
         s.pop();
         s.display();
         System.out.println(s.getMax());
+        s.writeToFile("resources/task4File.txt");
+        MaxStack newMaxStack = s.readFromFile("resources/task4File.txt");
 
     }
 
